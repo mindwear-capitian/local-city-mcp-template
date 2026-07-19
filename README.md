@@ -22,7 +22,7 @@ Reference implementation this was extracted from:
 
 | City | Repo | Tools | Maintainer | CI |
 |---|---|---|---|---|
-| Austin, TX | [local-austin-mcp](https://github.com/mindwear-capitian/local-austin-mcp) | 41 | [Ed Neuhaus](https://neuhausre.com) | [![CI](https://github.com/mindwear-capitian/local-austin-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-austin-mcp/actions/workflows/ci.yml) |
+| Austin, TX | [local-austin-mcp](https://github.com/mindwear-capitian/local-austin-mcp) | 43 | [Ed Neuhaus](https://neuhausre.com) | [![CI](https://github.com/mindwear-capitian/local-austin-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-austin-mcp/actions/workflows/ci.yml) |
 | Dallas, TX | [local-dallas-mcp](https://github.com/mindwear-capitian/local-dallas-mcp) | 3 | [Ed Neuhaus](https://edneuhaus.com) | [![CI](https://github.com/mindwear-capitian/local-dallas-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-dallas-mcp/actions/workflows/ci.yml) |
 | Houston, TX | [local-houston-mcp](https://github.com/mindwear-capitian/local-houston-mcp) | 2 | [Ed Neuhaus](https://edneuhaus.com) | [![CI](https://github.com/mindwear-capitian/local-houston-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-houston-mcp/actions/workflows/ci.yml) |
 | San Antonio, TX | [local-san-antonio-mcp](https://github.com/mindwear-capitian/local-san-antonio-mcp) | 3 | [Ed Neuhaus](https://edneuhaus.com) | [![CI](https://github.com/mindwear-capitian/local-san-antonio-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-san-antonio-mcp/actions/workflows/ci.yml) |
