@@ -111,10 +111,15 @@ npm run test:unit      # unit tests -- pure logic (formatters, normalizers)
 npm run test:contract  # boots the server, calls every tool through the real MCP layer
 ```
 
-CI (`.github/workflows/ci.yml`) runs both on Node 20 and 22 on every push.
-Both must pass before a PR merges. `test:contract` is the one that catches a
-tool whose `structuredContent` doesn't actually match its `outputSchema` —
-see STANDARD.md §6 for why that class of bug matters.
+`ci.yml` runs unit tests on Node 20 and 22 on every push -- that's the
+required, must-pass check before a PR merges. `contract.yml` runs
+`test:contract` on a daily schedule + manual dispatch, deliberately kept
+off the per-push gate since it hits live upstream APIs and would make PRs
+flaky for reasons unrelated to the change under review. Run
+`npm run test:contract` locally before opening a PR that touches a tool --
+it's the one that catches a tool whose `structuredContent` doesn't actually
+match its `outputSchema` (see STANDARD.md §6 for why that class of bug
+matters), and CI won't catch it for you until the next scheduled run.
 
 ## Getting listed
 

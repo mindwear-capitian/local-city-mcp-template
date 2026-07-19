@@ -23,9 +23,9 @@ Reference implementation this was extracted from:
 | City | Repo | Tools | Maintainer | CI |
 |---|---|---|---|---|
 | Austin, TX | [local-austin-mcp](https://github.com/mindwear-capitian/local-austin-mcp) | 41 | [Ed Neuhaus](https://neuhausre.com) | [![CI](https://github.com/mindwear-capitian/local-austin-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-austin-mcp/actions/workflows/ci.yml) |
-| Dallas, TX | [local-dallas-mcp](https://github.com/mindwear-capitian/local-dallas-mcp) | 2 | [Ed Neuhaus](https://edneuhaus.com) | [![CI](https://github.com/mindwear-capitian/local-dallas-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-dallas-mcp/actions/workflows/ci.yml) |
+| Dallas, TX | [local-dallas-mcp](https://github.com/mindwear-capitian/local-dallas-mcp) | 3 | [Ed Neuhaus](https://edneuhaus.com) | [![CI](https://github.com/mindwear-capitian/local-dallas-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-dallas-mcp/actions/workflows/ci.yml) |
 | Houston, TX | [local-houston-mcp](https://github.com/mindwear-capitian/local-houston-mcp) | 2 | [Ed Neuhaus](https://edneuhaus.com) | [![CI](https://github.com/mindwear-capitian/local-houston-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-houston-mcp/actions/workflows/ci.yml) |
-| San Antonio, TX | [local-san-antonio-mcp](https://github.com/mindwear-capitian/local-san-antonio-mcp) | 2 | [Ed Neuhaus](https://edneuhaus.com) | [![CI](https://github.com/mindwear-capitian/local-san-antonio-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-san-antonio-mcp/actions/workflows/ci.yml) |
+| San Antonio, TX | [local-san-antonio-mcp](https://github.com/mindwear-capitian/local-san-antonio-mcp) | 3 | [Ed Neuhaus](https://edneuhaus.com) | [![CI](https://github.com/mindwear-capitian/local-san-antonio-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-san-antonio-mcp/actions/workflows/ci.yml) |
 
 *(Your city not here yet? Build one below, then open a PR adding a row.)*
 
@@ -115,14 +115,16 @@ Swap the repo for whichever city you want from the table above.
 | `lib/request-context.js` | Propagates the MCP request's `AbortSignal` into every downstream fetch via `AsyncLocalStorage`, so client-side cancellation actually cancels in-flight calls |
 | `lib/output-schemas.js` | Shared Zod shapes (`searchShape`, `openObjectShape`, etc.) for `outputSchema` |
 | `lib/geocode.js` | U.S. Census geocoder — free, no key, works nationwide |
-| `lib/soda.js` | Generic Socrata (SODA) open-data client — works against any city or state's Socrata portal, not just your own (proven: same client, zero changes, powers both Austin's own permits/311/crime data AND the statewide Texas TEA school-ratings dataset) |
+| `lib/soda.js` | Generic Socrata (SODA) open-data client — works against any city or state's Socrata portal, not just your own (proven: same client, zero changes, powers Austin's permits/311/crime data, the statewide TX TEA dataset, AND Dallas's 311) |
+| `lib/arcgis.js` | Generic ArcGIS FeatureServer/MapServer client — many cities publish 311, GIS, and property layers this way when they aren't on Socrata (proven: powers Austin's county appraisal + FEMA flood tools AND San Antonio's 311) |
 | `lib/semaphore.js` | Named per-source concurrency caps (`withLimit`) so a fan-out composed tool doesn't hammer one upstream |
 | `lib/logger.js` | stderr + MCP logging-notification logger |
 | `lib/tiers.js` | Optional `core`/`all` tool-tier gating for once you have 20+ tools |
 | `tools/meta/about.js` | Minimal tool example + the required `about` capability tool |
 | `tools/environment/nws-alerts.js` | A **real, working example tool** (National Weather Service alerts) — copy its shape |
 | `test/mcp-all-tools.js` | The required contract test (STANDARD.md §6) |
-| `.github/workflows/ci.yml` | Unit + contract test on Node 20 + 22 |
+| `.github/workflows/ci.yml` | Unit tests on Node 20 + 22 on every push. Skips cleanly (not a failure) when run against the raw, unfilled template. |
+| `.github/workflows/contract.yml` | The live-upstream contract test, on a daily schedule + manual dispatch — deliberately NOT on every push (would make PRs flaky on third-party uptime). |
 
 None of this is speculative — it's copied from a production server that
 shipped 41 tools. Read `lib/register.js` and `lib/retry.js` top-of-file
