@@ -112,6 +112,8 @@ Swap the repo for whichever city you want from the table above.
 | `lib/request-context.js` | Propagates the MCP request's `AbortSignal` into every downstream fetch via `AsyncLocalStorage`, so client-side cancellation actually cancels in-flight calls |
 | `lib/output-schemas.js` | Shared Zod shapes (`searchShape`, `openObjectShape`, etc.) for `outputSchema` |
 | `lib/geocode.js` | U.S. Census geocoder — free, no key, works nationwide |
+| `lib/soda.js` | Generic Socrata (SODA) open-data client — works against any city or state's Socrata portal, not just your own (proven: same client, zero changes, powers both Austin's own permits/311/crime data AND the statewide Texas TEA school-ratings dataset) |
+| `lib/semaphore.js` | Named per-source concurrency caps (`withLimit`) so a fan-out composed tool doesn't hammer one upstream |
 | `lib/logger.js` | stderr + MCP logging-notification logger |
 | `lib/tiers.js` | Optional `core`/`all` tool-tier gating for once you have 20+ tools |
 | `tools/meta/about.js` | Minimal tool example + the required `about` capability tool |
