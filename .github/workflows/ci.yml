@@ -21,16 +21,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # This repo IS the template -- its own copy of the code still has
+      # {{PLACEHOLDER}} tokens (by design, see README). That's not
+      # buildable/testable, so skip cleanly here instead of failing. A repo
+      # created FROM this template with placeholders filled in has none of
+      # these tokens left, so this check is false there and the real test
+      # suite runs normally.
+      - name: Check for unfilled template placeholders
+        id: template_check
+        run: |
+          if grep -rlq '{{[A-Z_]*}}' --include='*.js' --include='*.json' --include='*.md' .; then
+            echo "is_template=true" >> "$GITHUB_OUTPUT"
+            echo "Unfilled {{...}} placeholders found -- this is the raw template, not a built city server. Skipping tests. See README.md before forking."
+          else
+            echo "is_template=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-node@v4
+        if: steps.template_check.outputs.is_template == 'false'
         with:
           node-version: ${{ matrix.node }}
           cache: npm
 
       - name: Install dependencies
+        if: steps.template_check.outputs.is_template == 'false'
         run: npm ci
 
       - name: Unit tests
+        if: steps.template_check.outputs.is_template == 'false'
         run: npm test
 
-      - name: Contract test (boots server, calls every tool via real MCP layer)
-        run: npm run test:contract
+      # Deliberately NOT running test:contract here -- it hits live upstream
+      # APIs (NWS at minimum, more per city), which would make this
+      # required per-push check flaky for reasons unrelated to the change
+      # being reviewed. See .github/workflows/contract.yml (scheduled +
+      # manual dispatch) and STANDARD.md section 6.
