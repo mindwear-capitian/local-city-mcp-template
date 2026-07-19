@@ -16,7 +16,7 @@ mechanically; STANDARD.md tells you why it's built this way.
 
 Reference implementation this was extracted from:
 [local-austin-mcp](https://github.com/mindwear-capitian/local-austin-mcp)
-(41 tools, live in production).
+(43 tools, live in production).
 
 ## The list
 
@@ -127,7 +127,7 @@ Swap the repo for whichever city you want from the table above.
 | `.github/workflows/contract.yml` | The live-upstream contract test, on a daily schedule + manual dispatch — deliberately NOT on every push (would make PRs flaky on third-party uptime). |
 
 None of this is speculative — it's copied from a production server that
-shipped 41 tools. Read `lib/register.js` and `lib/retry.js` top-of-file
+shipped 40+ tools. Read `lib/register.js` and `lib/retry.js` top-of-file
 comments for the reasoning if you're wondering why a piece exists.
 
 ## License
