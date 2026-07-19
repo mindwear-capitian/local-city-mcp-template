@@ -1,26 +1,64 @@
-# local-city-mcp-template
+# local-city-mcp
 
-This is a **template repo**, not a running server. It's the starting point
-for building `local-{city}-mcp` — an MCP server that gives an AI assistant
-plain-English access to official, public, no-key data about one metro area.
+The home for the `local-{city}-mcp` family: the spec, the list of cities
+built so far, and the template repo for building a new one — all in one
+place.
+
+`local-{city}-mcp` is an MCP server that gives an AI assistant plain-English
+access to official, public, no-key data about one metro area — property
+records, permits, civic data, schools, environment, public safety, and
+(where the maintainer has the right) real estate listings.
 
 **Before you touch any code, read [STANDARD.md](STANDARD.md).** It's the
-spec this template implements: the hard rules, the tool contract, the
-testing bar, and the licensing pattern. This README just tells you how to
-use the template mechanically; STANDARD.md tells you why it's built this
-way.
+spec: the hard rules, the tool contract, the testing bar, and the licensing
+pattern. Everything else here just tells you how to use the template
+mechanically; STANDARD.md tells you why it's built this way.
 
 Reference implementation this was extracted from:
 [local-austin-mcp](https://github.com/mindwear-capitian/local-austin-mcp)
 (41 tools, live in production).
 
-## Quick start
+## The list
 
-1. **Use this template** (GitHub's "Use this template" button, or `gh repo
-   create local-{city}-mcp --template mindwear-capitian/local-city-mcp-template`).
+| City | Repo | Tools | Maintainer | CI |
+|---|---|---|---|---|
+| Austin, TX | [local-austin-mcp](https://github.com/mindwear-capitian/local-austin-mcp) | 41 | [Ed Neuhaus](https://neuhausre.com) | [![CI](https://github.com/mindwear-capitian/local-austin-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/mindwear-capitian/local-austin-mcp/actions/workflows/ci.yml) |
+
+*(Your city not here yet? Build one below, then open a PR adding a row.)*
+
+### Using one
+
+Add to your Claude Desktop config (or any MCP client's config):
+
+```jsonc
+{
+  "mcpServers": {
+    "local-austin": {
+      "command": "npx",
+      "args": ["-y", "github:mindwear-capitian/local-austin-mcp"]
+    }
+  }
+}
+```
+
+Swap the repo for whichever city you want from the table above.
+
+## Building a new one
+
+1. **Use this template** — GitHub's "Use this template" button on this repo,
+   or:
+
+   ```bash
+   gh repo create local-{city}-mcp --template mindwear-capitian/local-city-mcp-template
+   ```
+
+   > This copies everything in this repo, including this README's list
+   > table. Replace this whole README with your own city's (see step 5) —
+   > the table above is this repo's index, not part of your city's docs.
+
 2. **Replace every placeholder.** Every file that needs per-city values uses
-   bare `{{TOKEN}}` markers (no leading `$` — that's deliberate, so they
-   never collide with `${{ }}` GitHub Actions expression syntax in
+   bare `{{TOKEN}}` markers (no leading `$` — deliberate, so they never
+   collide with `${{ }}` GitHub Actions expression syntax in
    `.github/workflows/ci.yml`, which you should leave untouched). Find them
    all with:
 
@@ -56,15 +94,14 @@ Reference implementation this was extracted from:
    you fill in the placeholders) as your pattern reference, or
    `tools/meta/about.js` for the minimal shape.
 
-5. **When it's real:** update the README's tool table, `Sources of Truth`
-   table, and Architecture section (this template's README is a skeleton —
-   flesh it out the way
+5. **When it's real:** replace this README with your city's own (tool
+   table, `Sources of Truth` table, Architecture section — see
    [local-austin-mcp's README](https://github.com/mindwear-capitian/local-austin-mcp#readme)
-   does once you have more than a couple of tools).
+   for the shape once you have more than a couple of tools).
 
 6. **Get listed:** once `test:contract` is green in CI and you meet
-   STANDARD.md §2, open a PR against
-   [awesome-local-mcp](https://github.com/mindwear-capitian/awesome-local-mcp).
+   STANDARD.md §2, open a PR against **this repo** adding one row to the
+   table above. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## What's already built for you
 
@@ -88,7 +125,9 @@ comments for the reasoning if you're wondering why a piece exists.
 
 ## License
 
-This template is Apache License 2.0 (see [LICENSE](LICENSE)) — use it, fork
-it, build a commercial product on it. Fill in `NOTICE` and `TRADEMARK.md`
-with your own name/marks before you ship; the placeholders in those files
-are examples, not defaults you inherit.
+The template code (`lib/`, `tools/`, `index.js`, tests, CI) is Apache
+License 2.0 (see [LICENSE](LICENSE)) — use it, fork it, build a commercial
+product on it. Fill in `NOTICE` and `TRADEMARK.md` with your own name/marks
+before you ship; the placeholders in those files are examples, not defaults
+you inherit. This README's list-curation text is not separately licensed —
+it's not code, do with it what you like.

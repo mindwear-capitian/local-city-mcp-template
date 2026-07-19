@@ -1,21 +1,50 @@
 # Contributing
 
-This file covers two different audiences — pick the section that applies.
+This file covers three different audiences — pick the section that applies.
 
 ## A) You're building a NEW local-{city}-mcp from this template
 
 You're not really "contributing to" this repo — you're using it as a
-starting point. See the README's Quick Start for the placeholder-replacement
-mechanics. The rules below still apply to what you build; they're the same
-rules the reference implementation (`local-austin-mcp`) follows, extracted
-into [STANDARD.md](STANDARD.md).
+starting point. See the README's "Building a new one" section for the
+placeholder-replacement mechanics. The rules below still apply to what you
+build; they're the same rules the reference implementation
+(`local-austin-mcp`) follows, extracted into [STANDARD.md](STANDARD.md).
 
-## B) You're contributing back to THIS template repo
+## B) Your city's server is done and you want it listed here
 
-Improvements to the shared `lib/` infrastructure, the example tools, or the
-spec itself are welcome — e.g. a bug in `retryFetch`'s backoff, a clearer
-`STANDARD.md` section, a better worked-example tool. Anything genuinely
-city-specific belongs in a city's own repo, not here.
+Open a PR adding **one row** to the table in this repo's README. Before you
+do, confirm all of the following — reviewers will check:
+
+- [ ] Repo is named `local-{city}-mcp`.
+- [ ] Runs with **zero required credentials** (`npx github:{you}/local-{city}-mcp`
+      just works — no signup, no API key).
+- [ ] Every tool pulls from an **official, public source** — no third-party
+      aggregators, no AI-generated content presented as fact.
+- [ ] Every response includes a `source_url`.
+- [ ] Has a `test:contract` script (spawns the server, calls every tool
+      through the real MCP protocol layer, validates output) and it's
+      **green in CI** — link the passing Actions run in your PR.
+- [ ] Has a LICENSE (Apache-2.0 recommended — see [STANDARD.md §8](STANDARD.md#8-attribution-license-and-trademark) —
+      but any OSI-approved permissive license is fine).
+- [ ] README documents its tools and sources of truth (a table like
+      [local-austin-mcp's](https://github.com/mindwear-capitian/local-austin-mcp#tools-41-live)).
+
+**PR format:** add your row, keep alphabetical by city, keep the CI badge —
+it's how anyone browsing the list can tell at a glance whether a listed
+server is currently healthy.
+
+**Removal policy:** a listed server may be removed if the repo is
+deleted/archived, CI has been red for an extended period with no response
+to an issue, or it's found to violate the hard rules below (e.g. started
+requiring a credential).
+
+## C) You're contributing back to THIS repo (the template/spec/list itself)
+
+Improvements to the shared `lib/` infrastructure, the example tools, the
+spec, or the list curation are welcome — e.g. a bug in `retryFetch`'s
+backoff, a clearer `STANDARD.md` section, a better worked-example tool, a
+broken link in the list. Anything genuinely city-specific belongs in a
+city's own repo, not here.
 
 ## Ground rules (apply to every local-{city}-mcp, hard constraints)
 
@@ -87,15 +116,12 @@ Both must pass before a PR merges. `test:contract` is the one that catches a
 tool whose `structuredContent` doesn't actually match its `outputSchema` —
 see STANDARD.md §6 for why that class of bug matters.
 
-## Getting listed in awesome-local-mcp
+## Getting listed
 
-Once your server is real (passes `test:contract` in CI, meets the hard
-rules above, has a filled-out README with a tool table and sources-of-truth
-table), open a PR against
-[awesome-local-mcp](https://github.com/mindwear-capitian/awesome-local-mcp)
-adding one row. See that repo's own CONTRIBUTING.md for the checklist.
+See section B above — once your server is real and green in CI, open a PR
+against **this repo** adding one row to the README's list table.
 
 ## Questions
 
-Open an issue on whichever repo the question is actually about (this
-template, your city's repo, or the index).
+Open an issue on whichever repo the question is actually about (this repo,
+or your city's own repo).
