@@ -24,13 +24,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Same guard as ci.yml: this repo IS the template -- its own copy of
+      # the code still has {{PLACEHOLDER}} tokens (by design, see README),
+      # so it has no lockfile and can't install or run. Skip cleanly here.
+      # Repos created FROM the template have no placeholders left, so the
+      # real contract test runs there.
+      - name: Check for unfilled template placeholders
+        id: template_check
+        run: |
+          if grep -rlq '{{[A-Z_]*}}' --include='*.js' --include='*.json' --include='*.md' .; then
+            echo "is_template=true" >> "$GITHUB_OUTPUT"
+            echo "Unfilled {{...}} placeholders found -- this is the raw template, not a built city server. Skipping contract test."
+          else
+            echo "is_template=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-node@v4
+        if: steps.template_check.outputs.is_template == 'false'
         with:
           node-version: "20"
           cache: npm
 
       - name: Install dependencies
+        if: steps.template_check.outputs.is_template == 'false'
         run: npm ci
 
       - name: Contract test (every tool, real MCP layer, live upstreams)
+        if: steps.template_check.outputs.is_template == 'false'
         run: npm run test:contract
